@@ -123,4 +123,20 @@ const router = createRouter({
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  console.log(`from name: ${from.name}, from path: ${from.fullPath}, to name: ${to.name}, to path: ${to.fullPath}, shop: ${to.query.shop}`)
+  console.log('window.location.href: ' + window.location.href)
+
+  let shop = to.query.shop
+  if (shop !=null && typeof shop === 'string'){
+    let oldShop = localStorage.getItem('shop')
+    if (oldShop !== shop){
+      localStorage.setItem("shop",shop)
+      console.log(`save shop, old value: ${oldShop}, new value: ${shop}`)
+    }
+  }
+
+  next()
+})
+
 export default router

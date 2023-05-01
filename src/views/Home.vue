@@ -13,9 +13,9 @@
     <header class="home-header wrap" :class="{'active' : state.headerScroll}">
       <router-link tag="i" to="./category"><i class="nbicon nbmenu2"></i></router-link>
       <div class="header-search">
-        <span class="app-name">新蜂商城</span>
+        <span class="app-name">{{shopName}}</span>
         <i class="iconfont icon-search"></i>
-        <router-link tag="span" class="search-title" to="./product-list?from=home">山河无恙，人间皆安</router-link>
+        <router-link tag="span" class="search-title" to="./product-list?from=home">--</router-link>
       </div>
       <router-link class="login" tag="span" to="./login" v-if="!state.isLogin">登录</router-link>
       <router-link class="login" tag="span" to="./user" v-else>
@@ -23,12 +23,20 @@
       </router-link>
     </header>
     <nav-bar />
-    <swiper :list="state.swiperList"></swiper>
-    <div class="category-list">
-      <div v-for="item in state.categoryList" v-bind:key="item.categoryId" @click="tips">
-        <img :src="item.imgUrl">
-        <span>{{item.name}}</span>
-      </div>
+    <div class="title"></div>
+    <div class="good">
+        <header class="good-header">店铺商品</header>
+        <van-skeleton title :row="3" :loading="state.loading">
+            <div class="good-box">
+                <div class="good-item" v-for="item in state.shopGoods" :key="item.goodsId" @click="goToDetail(item)">
+                    <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
+                    <div class="good-desc">
+                        <div class="title">{{ item.goodsName }}</div>
+                        <div class="price">¥ {{ item.sellingPrice }}</div>
+                    </div>
+                </div>
+            </div>
+        </van-skeleton>
     </div>
     <div class="good">
       <header class="good-header">新品上线</header>
@@ -76,6 +84,7 @@
 </template>
 
 <script setup>
+import axios from '@/utils/axios'
 import { reactive, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import swiper from '@/components/Swiper.vue'
@@ -84,6 +93,8 @@ import { getHome } from '@/service/home'
 import { getLocal } from '@/common/js/utils'
 import { showLoadingToast, closeToast, showToast } from 'vant'
 import { useCartStore } from '@/stores/cart'
+
+let shopName = ''
 const cart = useCartStore()
 const router = useRouter()
 const state = reactive({
@@ -92,6 +103,7 @@ const state = reactive({
   headerScroll: false, // 滚动透明判断
   hots: [],
   newGoodses: [],
+    shopGoods: [],
   recommends: [],
   categoryList: [
     {
@@ -139,6 +151,7 @@ const state = reactive({
   loading: true
 })
 onMounted(async () => {
+  getShopInfo()
   const token = getLocal('token')
   if (token) {
     state.isLogin = true
@@ -154,6 +167,7 @@ onMounted(async () => {
   state.newGoodses = data.newGoodses
   state.hots = data.hotGoodses
   state.recommends = data.recommendGoodses
+  state.shopGoods=data.shopGoods
   state.loading = false
   closeToast()
 })
@@ -172,10 +186,29 @@ const goToDetail = (item) => {
 const tips = () => {
   showToast('敬请期待');
 }
+
+const getShopInfo = () => {
+    let shop = localStorage.getItem("shop")
+    console.log("get shop info")
+    axios.get(`/shop/${shop}`, {
+        params: {}
+    }).then(res => {
+        console.log(`shop info: ${res.data}`)
+        if (res.data.name!==''){
+            shopName = res.data.name
+        }else{
+            shopName='东北有好货电商精选平台'
+        }
+
+    })
+}
 </script>
 
 <style lang="less" scoped >
   @import '../common/style/mixin';
+  .title{
+    height: 60px;
+  }
   .home-header {
       position: fixed;
       left: 0;

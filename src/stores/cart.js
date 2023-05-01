@@ -5,7 +5,9 @@ export const useCartStore = defineStore('cart', () => {
   const count = ref(0)
   async function updateCart() {
     const { data = [] } = await getCart()
-    count.value = data.length
+    if (data !=null){
+      count.value = data.length
+    }
   }
 
   return { count, updateCart }
