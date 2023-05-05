@@ -113,7 +113,8 @@ const handleCreateOrder = async () => {
   const { data } = await createOrder(params)
   setLocal('cartItemIds', '')
   state.orderNo = data
-  state.showPay = true
+  state.showPay = false
+    router.push({ path: '/order' })
 }
 
 const close = () => {

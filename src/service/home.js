@@ -10,6 +10,6 @@
 import axios from '../utils/axios'
 
 export function getHome() {
-  return axios.get('/index-infos?shop=8');
+  let shopId = localStorage.getItem('shop')
+  return axios.get('/index-infos?shop='+shopId);
 }
-
