@@ -18,7 +18,6 @@
           <div class="user-desc">
             <span>昵称：{{ state.user.nickName }}</span>
             <span>登录名：{{ state.user.loginName }}</span>
-            <span class="name">个性签名：{{ state.user.introduceSign }}</span>
           </div>
         </div>
       </div>
@@ -36,7 +35,18 @@
         <span>地址管理</span>
         <van-icon name="arrow" />
       </li>
+        <li @click="goTo('/about')">
+            <span>关于店铺</span>
+            <van-icon name="arrow" />
+        </li>
     </ul>
+      <div style="margin-left: 30px">
+          <div>店主名：{{state.shopOwner}}</div>
+          <div>店铺名：{{state.shopName}}</div>
+          <div>店铺地址：{{state.shopAddress}}</div>
+          <br/>
+          <div>店铺二维码：<QrcodeVue :value="state.shopAddress" size="75" level="H" /></div>
+      </div>
     <nav-bar></nav-bar>
   </div>
 </template>
@@ -47,16 +57,25 @@ import navBar from '@/components/NavBar.vue'
 import sHeader from '@/components/SimpleHeader.vue'
 import { getUserInfo } from '@/service/user'
 import { useRouter } from 'vue-router'
+import QrcodeVue from 'qrcode.vue'
+
 const router = useRouter()
 const state = reactive({
   user: {},
-  loading: true
+  loading: true,
+    shopName:'',
+    shopAddress: '',
+    shopOwner:'',
 })
 
 onMounted(async () => {
   const { data } = await getUserInfo()
   state.user = data
   state.loading = false
+    state.shopId= localStorage.getItem("shop")
+    state.shopAddress = "https://mall.wiloon.com/#/home?shop="+state.shopId
+    state.shopName= localStorage.getItem("shopname")
+    state.shopOwner = localStorage.getItem("shopowner")
 })
 
 const goBack = () => {

@@ -14,8 +14,6 @@
       <router-link tag="i" to="./category"><i class="nbicon nbmenu2"></i></router-link>
       <div class="header-search">
         <span class="app-name">{{shopName}}</span>
-        <i class="iconfont icon-search"></i>
-        <router-link tag="span" class="search-title" to="./product-list?from=home">--</router-link>
       </div>
       <router-link class="login" tag="span" to="./login" v-if="!state.isLogin">登录</router-link>
       <router-link class="login" tag="span" to="./user" v-else>
@@ -38,48 +36,8 @@
             </div>
         </van-skeleton>
     </div>
-    <div class="good">
-      <header class="good-header">新品上线</header>
-      <van-skeleton title :row="3" :loading="state.loading">
-        <div class="good-box">
-          <div class="good-item" v-for="item in state.newGoodses" :key="item.goodsId" @click="goToDetail(item)">
-            <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
-            <div class="good-desc">
-              <div class="title">{{ item.goodsName }}</div>
-              <div class="price">¥ {{ item.sellingPrice }}</div>
-            </div>
-          </div>
-        </div>
-      </van-skeleton>
-    </div>
-    <div class="good">
-      <header class="good-header">热门商品</header>
-      <van-skeleton title :row="3" :loading="state.loading">
-        <div class="good-box">
-          <div class="good-item" v-for="item in state.hots" :key="item.goodsId" @click="goToDetail(item)">
-            <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
-            <div class="good-desc">
-              <div class="title">{{ item.goodsName }}</div>
-              <div class="price">¥ {{ item.sellingPrice }}</div>
-            </div>
-          </div>
-        </div>
-      </van-skeleton>
-    </div>
-    <div class="good" :style="{ paddingBottom: '100px'}">
-      <header class="good-header">最新推荐</header>
-      <van-skeleton title :row="3" :loading="state.loading">
-        <div class="good-box">
-          <div class="good-item" v-for="item in state.recommends" :key="item.goodsId" @click="goToDetail(item)">
-            <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
-            <div class="good-desc">
-              <div class="title">{{ item.goodsName }}</div>
-              <div class="price">¥ {{ item.sellingPrice }}</div>
-            </div>
-          </div>
-        </div>
-      </van-skeleton>
-    </div>
+
+
   </div>
 </template>
 
@@ -196,6 +154,8 @@ const getShopInfo = () => {
         console.log(`shop info: ${res.data}`)
         if (res.data.name!==''){
             shopName = res.data.name
+            localStorage.setItem("shopname",shopName)
+            localStorage.setItem("shopowner",res.data.nickName)
         }else{
             shopName='东北有好货电商精选平台'
         }
