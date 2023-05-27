@@ -30,7 +30,7 @@
                     <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
                     <div class="good-desc">
                         <div class="title">{{ item.goodsName }}</div>
-                        <div class="price">¥ {{ item.sellingPrice }}</div>
+                        <div class="price">¥ {{ item.sellingPrice }}  <span style="color: #c8c9cc;font-size: 15px">已售: {{ item.sumValue }}</span></div>
                     </div>
                 </div>
             </div>
