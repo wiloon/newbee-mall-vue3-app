@@ -73,7 +73,7 @@ onMounted(async () => {
   state.user = data
   state.loading = false
     state.shopId= localStorage.getItem("shop")
-    state.shopAddress = "https://mall.wiloon.com/#/home?shop="+state.shopId
+    state.shopAddress = "https://dbyhh.ehoneycomb.net/#/home?shop="+state.shopId
     state.shopName= localStorage.getItem("shopname")
     state.shopOwner = localStorage.getItem("shopowner")
 })
