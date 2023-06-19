@@ -9,7 +9,7 @@ import 'lib-flexible/flexible'
 import './assets/main.css'
 import './common/style/theme.css'
 import 'vant/es/toast/style'
-import vConsole from './utils/vconsole'
+//import vConsole from './utils/vconsole'
 
 const app = createApp(App)
 
