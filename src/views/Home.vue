@@ -22,21 +22,22 @@
     <nav-bar />
     <div class="title"></div>
     <div class="good">
-        <header class="good-header">店铺商品</header>
-        <van-skeleton title :row="3" :loading="state.loading">
-            <div class="good-box">
-                <div class="good-item" v-for="item in state.shopGoods" :key="item.goodsId" @click="goToDetail(item)">
-                    <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
-                    <div class="good-desc">
-                        <div class="title">{{ item.goodsName }}</div>
-                        <div class="price">¥ {{ item.sellingPrice }}  <span style="color: #c8c9cc;font-size: 15px">已售: {{ item.sumValue }}</span></div>
-                    </div>
-                </div>
+      <van-skeleton title :row="3" :loading="state.loading">
+        <div class="good-box">
+          <div class="good-item" v-for="item in state.shopGoods" :key="item.goodsId" @click="goToDetail(item)">
+            <div class="good-img">
+              <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
             </div>
-        </van-skeleton>
+            <div class="good-desc">
+              <div class="title">{{ item.goodsName }}</div>
+              <div class="price">¥ {{ item.sellingPrice }} <span
+                  style="color: #c8c9cc;font-size: 12px">已售: {{ item.sumValue }}</span></div>
+            </div>
+          </div>
+        </div>
+      </van-skeleton>
     </div>
-
-
+    <div class="foot-padding"></div>
   </div>
 </template>
 
@@ -44,8 +45,6 @@
 import axios from '@/utils/axios'
 import { reactive, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
-import swiper from '@/components/Swiper.vue'
-import navBar from '@/components/NavBar.vue'
 import { getHome } from '@/service/home'
 import { getLocal } from '@/common/js/utils'
 import { showLoadingToast, closeToast, showToast } from 'vant'
@@ -192,7 +191,6 @@ const getShopInfo = () => {
           color: #fff;
         }
       }
-
       .header-search {
           display: flex;
           width: 74%;
@@ -259,28 +257,57 @@ const getShopInfo = () => {
       font-weight: 500;
     }
     .good-box {
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
+      display: grid;
+      grid-row-gap: 10px;
+      grid-column-gap: 10px;
+      background-color: #f8f8f8;
+      grid-template-columns: repeat(2,1fr);
+      padding: 10px 10px;
       .good-item {
+        background-color: #ffffff;
+        border-radius: 0.25rem;
         box-sizing: border-box;
-        width: 50%;
-        border-bottom: 1PX solid #e9e9e9;
-        padding: 10px 10px;
-        img {
-          display: block;
-          width: 120px;
-          margin: 0 auto;
+        display: block;
+        font-size: 0;
+        margin: 0;
+        overflow: hidden;
+        .good-img{
+          height: 0;
+          margin: 0;
+          padding-top: 100%;
+          position: relative;
+          width: 100%;
+          img {
+            left: 0;
+            position: absolute;
+            top:0;
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
         }
         .good-desc {
-          text-align: center;
+          border-top: unset;
+          margin-left: 10px;
+          max-width: 100%;
+          text-align: left;
           font-size: 14px;
-          padding: 10px 0;
           .title {
-            color: #222333;
+            margin-right: 10px;
+            margin-top: 10px;
+            color: #232326;
+            font-size: 13px;
+            height: 32px;
+            line-height: 16px;
+            word-break: break-all;
+            user-select: none;
           }
           .price {
             color: @primary;
+            margin-top: 5px;
+            white-space: nowrap;
+            display: inline-block;
+            position: relative;
           }
         }
         &:nth-child(2n + 1) {
@@ -330,5 +357,8 @@ const getShopInfo = () => {
           }
       }
     }
+  }
+  .foot-padding{
+    height: 100px;
   }
 </style>
