@@ -35,18 +35,7 @@
         <span>地址管理</span>
         <van-icon name="arrow" />
       </li>
-        <li @click="goTo('/about')">
-            <span>关于店铺</span>
-            <van-icon name="arrow" />
-        </li>
     </ul>
-      <div style="margin-left: 30px">
-          <div>店铺：{{state.shopName}}</div>
-          <div>店主：{{state.shopOwner}}</div>
-          <div>店铺地址：{{state.shopAddress}}</div>
-          <br/>
-          <div>店铺二维码：<QrcodeVue :value="state.shopAddress" size="75" level="H" /></div>
-      </div>
     <nav-bar></nav-bar>
   </div>
 </template>

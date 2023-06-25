@@ -9,15 +9,12 @@
  <template>
   <div class="about">
     <s-header :name="'关于店铺'"></s-header>
-    <div class="about-body">
-      <div>
-         <div>店主名：{{state.shopOwner}}</div>
-        <div>店铺名：{{state.shopName}}</div>
-        <div>店铺地址：{{state.shopAddress}}</div>
-          <br/>
-        <div>店铺二维码：<QrcodeVue :value="state.shopAddress" size="75" level="H" /></div>
-      </div>
-    </div>
+    <van-cell-group inset>
+      <van-cell title="店铺名" :value=state.shopName />
+      <van-cell title="店主名" :value=state.shopOwner />
+      <van-cell title="店铺二维码" value="" />
+      <div style="text-align: right; margin-top: 5px; margin-right: 10px"><QrcodeVue :value="state.shopAddress" size="75" level="H" /></div>
+    </van-cell-group>
   </div>
 </template>
 
@@ -43,6 +40,7 @@ onMounted(async () => {
 <style lang="less" scoped>
   .about {
     box-sizing: border-box;
+    background-color: #f8f8f8;
     padding: 20px;
     .intro-img {
       width: 100%;

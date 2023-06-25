@@ -91,11 +91,16 @@ onMounted(() => {
 })
 
 const init = async () => {
-  showLoadingToast({ message: '加载中...', forbidClick: true });
-  const { data } = await getCart({ pageNumber: 1 })
-  state.list = data
-  state.result = data.map(item => item.cartItemId)
-  closeToast()
+  try{
+    showLoadingToast({ message: '加载中...', forbidClick: true });
+    const { data } = await getCart({ pageNumber: 1 })
+    state.list = data
+    state.result = data.map(item => item.cartItemId)
+    closeToast()
+  }catch (error){
+    console.error(error)
+  }
+
 }
 
 const total = computed(() => {
@@ -173,10 +178,14 @@ const groupChange = (result) => {
 }
 
 const allCheck = () => {
-  if (!state.checkAll) {
-    state.result = state.list.map(item => item.cartItemId)
-  } else {
-    state.result = []
+  try {
+    if (!state.checkAll) {
+      state.result = state.list.map(item => item.cartItemId)
+    } else {
+      state.result = []
+    }
+  } catch (error) {
+    console.error(error)
   }
 }
 </script>

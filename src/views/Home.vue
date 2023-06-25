@@ -12,7 +12,7 @@
   <div>
     <header class="home-header wrap" :class="{'active' : state.headerScroll}">
       <div class="header-search">
-        <span class="app-name">{{shopName}} <van-icon name="info-o" /></span>
+        <span class="app-name">{{shopName}} <van-icon name="info-o" @click="goTo('/about')"/></span>
       </div>
       <router-link class="login" tag="span" to="./login" v-if="!state.isLogin">登录</router-link>
       <router-link class="login" tag="span" to="./user" v-else>
@@ -159,6 +159,9 @@ const getShopInfo = () => {
         }
 
     })
+}
+const goTo = (r, query) => {
+  router.push({ path: r, query: query || {} })
 }
 </script>
 
