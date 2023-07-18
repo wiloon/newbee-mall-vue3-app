@@ -12,6 +12,7 @@
     <van-cell-group inset>
       <van-cell title="店铺名" :value=state.shopName />
       <van-cell title="店主名" :value=state.shopOwner />
+      <van-cell title="店铺地址" :value=state.shopAddress @click="goTo(state.shopAddress)"/>
       <van-cell title="店铺二维码" value="" />
       <div style="text-align: right; margin-top: 5px; margin-right: 10px"><QrcodeVue :value="state.shopAddress" size="75" level="H" /></div>
     </van-cell-group>
@@ -35,6 +36,10 @@ onMounted(async () => {
     state.shopName= localStorage.getItem("shopname")
     state.shopAddress = "https://mall.wiloon.com/#/home?shop="+state.shopId
 })
+
+const goTo = (r, query) => {
+  window.location.replace(r)
+}
 </script>
 
 <style lang="less" scoped>
